@@ -21,8 +21,6 @@ namespace xadrez {
 
 
         public override bool[,] MovimentosPossiveis() {
-            Console.WriteLine("a");
-
             bool[,] mat = new bool[tab.linhas, tab.colunas];
 
             Posicao pos = new Posicao(0, 0);
