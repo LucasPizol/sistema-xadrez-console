@@ -4,17 +4,26 @@ using xadrez;
 namespace xadrez_console {
     class Program {
         static void Main(string[] args) {
-
-            try {
-                PartidaXadrez partidaXadrez = new PartidaXadrez();
+            PartidaXadrez partidaXadrez = new PartidaXadrez();
 
 
-                Tela.ImprimirTabuleiro(partidaXadrez.Tab);
+            while (!partidaXadrez.Terminada) {
+                try {
 
-                Console.ReadLine();
-            } catch (TabuleiroException e) {
-                Console.WriteLine(e.Message);
+                    Console.Clear();
+                    Tela.ImprimirTabuleiro(partidaXadrez.Tab);
+
+                    Console.Write("Origem: ");
+                    Posicao origem = Tela.LerPosicaoXadrez().ToPosicao();
+                    Console.Write("Destino: ");
+                    Posicao destino = Tela.LerPosicaoXadrez().ToPosicao();
+
+                    partidaXadrez.ExecutaMovimento(origem, destino);
+                } catch (TabuleiroException e) {
+                    Console.WriteLine(e.Message);
+                }
             }
+
         }
     }
 

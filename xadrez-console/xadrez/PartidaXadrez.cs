@@ -6,6 +6,7 @@ namespace xadrez {
         public Tabuleiro Tab { get; private set; }
         private int _turno;
         private Cor _jogadorAtual;
+        public bool Terminada { get; private set; }
 
         public PartidaXadrez() {
             Tab = new Tabuleiro(8, 8);
@@ -19,6 +20,7 @@ namespace xadrez {
             p.IncrementarQtdMovimentos();
             Peca pecaCapturada = Tab.RetirarPeca(destino);
             Tab.ColocarPeca(p, destino);
+            Terminada = false;
         }
 
         private void ColocarPecas() {
