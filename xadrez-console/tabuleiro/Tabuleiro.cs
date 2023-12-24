@@ -40,7 +40,7 @@
 
         }
 
-        private bool PosicaoValida(Posicao pos) {
+        public bool PosicaoValida(Posicao pos) {
             return !(pos.linha < 0 || pos.linha >= linhas || pos.coluna < 0 || pos.coluna >= colunas);
         }
 
