@@ -3,6 +3,19 @@ using xadrez;
 
 namespace xadrez_console {
     internal class Tela {
+
+        public static void ImprimirPartida(PartidaXadrez partida) {
+            ImprimirTabuleiro(partida.Tab);
+            Console.WriteLine();
+            ImprimirPecasCapturadas(partida);
+            Console.WriteLine();
+
+            Console.WriteLine("Turno: " + partida.Turno);
+            Console.WriteLine("Aguardando jogada: " + partida.JogadorAtual);
+            if (partida.Xeque) {
+                Console.WriteLine("VOCÊ ESTÁ EM XEQUE!");
+            }
+        }
         public static void ImprimirTabuleiro(Tabuleiro tab) {
             for (int i = 0; i < tab.linhas; i++) {
                 Console.Write(tab.linhas - i + " ");
@@ -12,6 +25,22 @@ namespace xadrez_console {
                 Console.WriteLine();
             }
             Console.WriteLine("  a b c d e f g h");
+        }
+
+        public static void ImprimirPecasCapturadas(PartidaXadrez partida) {
+            Console.WriteLine("Pecas capturadas: ");
+
+            Console.Write("Cor Branca: ");
+            foreach(Peca x in partida.PecasCapturadas(Cor.Branca)) {
+                Console.Write($"{x} ");
+            }
+            Console.WriteLine();
+            Console.Write("Cor Preta: ");
+            foreach (Peca x in partida.PecasCapturadas(Cor.Preta)) {
+                Console.Write($"{x} ");
+            }
+            Console.WriteLine();
+
         }
 
         public static void ImprimirTabuleiro(Tabuleiro tab, bool[,] posicoesPossiveis) {

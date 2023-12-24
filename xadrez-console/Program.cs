@@ -11,9 +11,7 @@ namespace xadrez_console {
                 try {
 
                     Console.Clear();
-                    Tela.ImprimirTabuleiro(partidaXadrez.Tab);
-                    Console.WriteLine($"Turno: {partidaXadrez.Turno}");
-                    Console.WriteLine($"Aguardando a jogada: {partidaXadrez.JogadorAtual}");
+                    Tela.ImprimirPartida(partidaXadrez);
                     Console.WriteLine();
                     Console.Write("Origem: ");
                     Posicao origem = Tela.LerPosicaoXadrez().ToPosicao();
@@ -40,7 +38,10 @@ namespace xadrez_console {
                     Console.ReadLine();
                 }
             }
-
+                Console.WriteLine("Xequemate!");
+                Console.WriteLine("Vencedor: " + partidaXadrez.JogadorAtual);
+                return;
+            
         }
     }
 
