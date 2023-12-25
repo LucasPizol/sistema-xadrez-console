@@ -106,10 +106,10 @@ namespace xadrez {
             }
 
             if (p is Peao) {
-                if (origem.coluna != destino.coluna && pecaCapt != VulneravelEnPassant ) {
+                if (origem.coluna != destino.coluna && pecaCapt != VulneravelEnPassant) {
                     Peca peao = Tab.RetirarPeca(destino);
                     Posicao posP;
-                    if(p.cor == Cor.Branca) {
+                    if (p.cor == Cor.Branca) {
                         posP = new Posicao(3, destino.coluna);
                     } else {
                         posP = new Posicao(4, destino.coluna);
@@ -122,11 +122,60 @@ namespace xadrez {
 
         public void RealizaJogada(Posicao origem, Posicao destino) {
             Peca pecaCapturada = ExecutaMovimento(origem, destino);
+            Peca p = Tab.peca(destino);
+
 
             if (EstaEmXeque(JogadorAtual)) {
                 DesfazMovimento(origem, destino, pecaCapturada);
                 throw new TabuleiroException("Você não pode se colocar em xeque.");
             }
+
+            if (p is Peao) {
+                if ((p.cor == Cor.Branca && destino.linha == 0) || (p.cor == Cor.Preta && destino.linha == 7)) {
+                    p = Tab.RetirarPeca(destino);
+                    _pecas.Remove(p);
+                    Peca novaPeca;
+
+                    Console.WriteLine();
+                    Console.WriteLine("1 - Cavalo");
+                    Console.WriteLine("2 - Bispo");
+                    Console.WriteLine("3 - Torre");
+                    Console.WriteLine("4 - Dama");
+                    Console.WriteLine();
+                    Console.Write("Digite o número da peça para promover o peão: ");
+
+                    int option = int.Parse(Console.ReadLine());
+
+                    while (true) {
+
+                        if (option == 1) {
+                            novaPeca = new Cavalo(Tab, p.cor);
+                            break;
+                        }
+
+                        if (option == 2) {
+                            novaPeca = new Bispo(Tab, p.cor);
+                            break;
+                        }
+
+                        if (option == 3) {
+                            novaPeca = new Torre(Tab, p.cor);
+                            break;
+                        }
+
+                        if (option == 4) {
+                            novaPeca = new Dama(Tab, p.cor);
+                            break;
+                        }
+
+                        Console.WriteLine("Opção inválida.");
+                    }
+
+                    Tab.ColocarPeca(novaPeca, destino);
+                    _pecas.Add(novaPeca);
+                }
+            }
+
 
             if (EstaEmXeque(CorAdversaria(JogadorAtual))) {
                 Xeque = true;
@@ -142,7 +191,6 @@ namespace xadrez {
             MudaJogador();
             Turno++;
 
-            Peca p = Tab.peca(destino);
             //#jogada en passant;
             if (p is Peao && (destino.linha == origem.linha - 2 || destino.linha == origem.linha + 2)) {
                 VulneravelEnPassant = p;
